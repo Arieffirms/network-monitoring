@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Monitoring service Prometheus itu sendiri
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Monitoring host / server melalui Node Exporter (CPU, RAM, Disk, Jaringan)
+  - job_name: "node"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+

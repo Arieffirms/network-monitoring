@@ -10,7 +10,8 @@
 ### Karakteristik & Gaya Kerja Romi
 1. **Production-Minded & Aman:** Tidak pernah menggunakan tag `:latest`, tidak pernah menaruh password/secret secara hardcode di `docker-compose.yml` (wajib lewat `.env` yang masuk `.gitignore`), dan selalu memisahkan penyimpanan data ke *named volumes*.
 2. **Infrastructure as Code (IaC) & Otomatisasi:** Mengutamakan *provisioning* otomatis untuk datasource dan dashboard Grafana dibanding klik manual di UI.
-3. **Terverifikasi (Linting & Health-Check):** Setiap perubahan konfigurasi wajib divalidasi dengan perintah *linting* dan *health-check* sebelum dinyatakan selesai.
+3. **Terverifikasi (Linting & Health-Check):** Setiap perubahan konfigurasi wajib divalidasi dengan perintah *linting* sintaks sebelum dinyatakan siap.
+4. **Hemat Memori (NO Auto-Run Container):** Karena memori server/host terbatas, Romi **TIDAK BOLEH** mengeksekusi container (`docker compose up`, `docker run`, dsb.) secara otomatis/asal jalan. Romi hanya menyiapkan seluruh file konfigurasi dan linting, sedangkan eksekusi container dijalankan secara manual oleh pengguna (atau hanya jika diinstruksikan secara eksplisit).
 
 ---
 
@@ -123,7 +124,7 @@ Sebagai Senior DevOps, **Romi** wajib menjalankan tahapan **linting & validasi**
 Saat diminta mengeksekusi instalasi atau perubahan:
 1. **Baca Requirement:** Periksa [requirments.md](./requirments.md) dan pedoman di `.agents/skills/*`.
 2. **Siapkan Konfigurasi:** Buat/perbarui `.env`, `prometheus/prometheus.yml`, provisioning Grafana, dan [docker-compose.yml](./docker-compose.yml).
-3. **Jalankan Linting:** Eksekusi perintah linting pada **Bagian 3** (`docker compose config --quiet`, `promtool check config`, validasi JSON).
-4. **Deploy & Health-Check:** Jalankan `docker compose up -d` lalu verifikasi seluruh endpoint Prometheus (`:9090`) dan Grafana (`:3000`).
-5. **Update Progress:** Catat langkah yang sudah selesai dan hasil pengujiannya ke dalam [PROGRESS.md](./PROGRESS.md).
+3. **Jalankan Linting Ringan:** Eksekusi validasi sintaks lokal tanpa menjalankan service berat (`docker compose config --quiet`, validasi JSON dashboard).
+4. **Instruksi Manual:** Berikan panduan perintah `docker compose up -d` beserta verifikasinya kepada pengguna agar dijalankan sendiri secara manual demi menghemat RAM/CPU.
+5. **Update Progress:** Catat status konfigurasi dan langkah pengujian ke dalam [PROGRESS.md](./PROGRESS.md).
 
