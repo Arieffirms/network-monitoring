@@ -66,21 +66,18 @@ Pola data dari generator:
 - CPU berkorelasi dengan total trafik; RAM, suhu, dan tegangan berfluktuasi pelan.
 - Uji manual lonjakan: `docker exec snmp-generator touch /dynamic/FORCE_SPIKE`.
 
-### C. Auto-Provisioning Alerting Telegram
+### C. Auto-Provisioning Alerting Telegram (Template Pesan Rapi)
 - Rule lonjakan bandwidth `ether1` **> 80 Mbps** aktif di scheduler Grafana (`for: 30s`).
-- Target query PromQL diperbaiki menggunakan label `ifName=~"ether1.*"` sesuai standar MIB MikroTik.
+- Target query PromQL menggunakan label `ifName=~"ether1.*"` sesuai standar MIB MikroTik.
+- Format pesan Telegram dirapikan secara profesional menggunakan pemisah rapi, emoji indikator (🚨 / ✅), ringkasan detail unduhan, batas aman, rekomendasi tindakan IT Support, serta direct link ke dashboard.
 - Rute koneksi Telegram dikunci menggunakan IPv4 langsung di `docker-compose.yml` (`extra_hosts`) untuk mencegah *timeout* IPv6.
-- Status alert sebelumnya **Firing** terus (trafik dummy konstan ~95 Mbps). Setelah generator aktif, alert hanya firing saat ada lonjakan. Notifikasi ke Telegram IT Support (Chat ID `1510478721`).
 
-### D. Skema Lengkap 40-Panel MikroTik Monitoring (`bps/network-monitoring`)
-- Terpasang dashboard komprehensif `MikroTik Monitoring (Full Advanced)` (`mikrotik-monitoring.json`) yang mencakup:
-  - Total SNMP Walk time & Scrape PDUs
-  - System Info: Board ver, Package ver, Serial Number, CPU Frequency, POE Status/Current/Voltage
-  - 4 Panel Gauges: CPU Load, RAM Load, Disk Load, CPU Temperature
-  - Comprehensive Network Interfaces Table & Basic Traffic
-  - Wireless (Wi-Fi client count, Tx CCQ, Noise, Signal-to-Noise Heatmap)
-  - CAPsMAN & W60G Panels
-  - Simple Queue & Tree Queue Monitoring
+### D. Skema Asli 40-Panel MikroTik Monitoring (`bps/network-monitoring`)
+- Panel dan layout dashboard **Full Advanced** (`grafana/dashboards/mikrotik-monitoring.json`) kini **100% identik dan mengikuti struktur asli** dari `/home/rapiets/Documents/intern/bps/network-monitoring/grafana/provisioning/dashboards/Mikrotik-snmp-prometheus.json`:
+  - **40 Panel & Baris Asli:** Terbagi rapi ke dalam grup baris standar (SNMP, System, Network Traffic, Interfaces, Tx/Rx Eth Errors, Neighbors, Wireless, CAPsMAN, W60G, Modem, Simple Queue, Tree Queue, Paket *cast/Discard/Errors, dan Interface Traffic).
+  - **Datasource Mapping:** Semua referensi UID datasource bawaan (`PBFA97CFB590B2093` & `${DS_PROMETHEUS}`) telah dipetakan secara bersih ke datasource `prometheus`.
+  - **Templating Variables:** Mengadopsi variabel bawaan repo aslinya (`$instance`, `$Job`, `$Interface`, `$queuesimple_name`, `$queuetree_name`) yang tersinkronisasi dengan exporter SNMP.
+  - **Dataset Simulasi:** Didukung penuh oleh dataset 280 OID master di simulator sehingga seluruh metrik (CPU, RAM, Uptime, Wi-Fi, CAPsMAN, Simple & Tree Queue, Neighbors, POE) terbaca.
 
 ---
 

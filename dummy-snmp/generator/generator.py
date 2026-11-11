@@ -45,6 +45,7 @@ READY_FILE = os.path.join(DYNAMIC_DIR, "READY")
 LOG_EVERY_TICKS = 6
 
 COUNTER64_MAX = 2 ** 64
+COUNTER32_MAX = 2 ** 32 - 1
 
 # Kapasitas link (Mbps) - sesuai ifSpeed di public.snmprec
 LINK_MBPS = {"1": 1000.0, "2": 1000.0, "3": 300.0}
@@ -57,6 +58,11 @@ INITIAL_COUNTERS = {
     "ifHCOutOctets.1": 10000000000,
     "ifHCOutOctets.2": 10000000000,
     "ifHCOutOctets.3": 5000000000,
+    "simpleQueueBytesIn.1": 150000000,
+    "simpleQueueBytesIn.2": 95000000,
+    "simpleQueueBytesOut.1": 85000000,
+    "simpleQueueBytesOut.2": 65000000,
+    "treeQueueBytes.1": 150000000,
 }
 
 RUNNING = True
@@ -190,6 +196,21 @@ class Generator(object):
             self.counters[key] = (self.counters[key] + delta) % COUNTER64_MAX
             write_value(key, self.counters[key])
 
+        # Simple & Tree Queue (32-bit counters, max 4.29 GB)
+        sq_in_delta = int(wan_down * 1000000 / 8 * dt)
+        sq_out_delta = int(wan_up * 1000000 / 8 * dt)
+        self.counters["simpleQueueBytesIn.1"] = (self.counters["simpleQueueBytesIn.1"] + sq_in_delta) % COUNTER32_MAX
+        self.counters["simpleQueueBytesIn.2"] = (self.counters["simpleQueueBytesIn.2"] + int(lan_in * 1000000 / 8 * dt)) % COUNTER32_MAX
+        self.counters["simpleQueueBytesOut.1"] = (self.counters["simpleQueueBytesOut.1"] + sq_out_delta) % COUNTER32_MAX
+        self.counters["simpleQueueBytesOut.2"] = (self.counters["simpleQueueBytesOut.2"] + int(lan_out * 1000000 / 8 * dt)) % COUNTER32_MAX
+        self.counters["treeQueueBytes.1"] = (self.counters["treeQueueBytes.1"] + sq_in_delta) % COUNTER32_MAX
+
+        write_value("simpleQueueBytesIn.1", self.counters["simpleQueueBytesIn.1"])
+        write_value("simpleQueueBytesIn.2", self.counters["simpleQueueBytesIn.2"])
+        write_value("simpleQueueBytesOut.1", self.counters["simpleQueueBytesOut.1"])
+        write_value("simpleQueueBytesOut.2", self.counters["simpleQueueBytesOut.2"])
+        write_value("treeQueueBytes.1", self.counters["treeQueueBytes.1"])
+
         # CPU: berkorelasi dengan total trafik yang diproses router
         total = wan_down + wan_up + wlan_down + wlan_up
         cpu1 = clamp(6 + total * 0.35 + self.cpu_noise.step(), 1, 100)
@@ -200,11 +221,17 @@ class Generator(object):
         # RAM terpakai (unit 1024 byte, total 262144 = 256 MB)
         write_value("hrStorageUsed.1", self.ram_kb.step())
 
-        # Suhu (°C) & tegangan (0.1 V -> 240 = 24.0 V)
+        # Suhu (0.1 °C -> 420 = 42.0 °C agar cocok dengan query PromQL /10) & tegangan (0.1 V -> 240 = 24.0 V)
         board = self.temp_board.step(40 + cpu1 * 0.12)
-        write_value("mtxrHlTemperature", round(board))
-        write_value("mtxrHlProcessorTemperature", round(board + 5 + cpu1 * 0.05))
-        write_value("mtxrHlVoltage", self.voltage.step())
+        write_value("mtxrHlTemperature", round(board * 10))
+        write_value("mtxrHlProcessorTemperature", round((board + 5 + cpu1 * 0.05) * 10))
+        write_value("mtxrHlVoltage", round(self.voltage.step()))
+
+        # Wi-Fi Client Count & CCQ (%)
+        wifi_clients = round(clamp(7 + wlan_down * 0.2 + random.gauss(0, 1), 3, 20))
+        wifi_ccq = round(clamp(94 + random.gauss(0, 2), 85, 99))
+        write_value("mtxrWlRtabEntryCount", wifi_clients)
+        write_value("mtxrWlApOverallTxCCQ", wifi_ccq)
 
         if self.tick_count % LOG_EVERY_TICKS == 0:
             print("[generator] ether1 RX %.1f / TX %.1f Mbps | ether2 out %.1f | "

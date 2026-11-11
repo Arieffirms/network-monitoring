@@ -60,8 +60,8 @@ groups:
         execErrState: "Error"
         for: "30s"
         annotations:
-          summary: "Trafik ether1-WAN Melebihi 80 Mbps"
-          description: "Kecepatan download ether1-WAN melebihi batas 80 Mbps (saat ini: {{ $values.B.Value | printf \"%.2f\" }} Mbps). Mohon cek pemakaian bandwidth."
+          summary: "Trafik ether1-WAN Melebihi Batas 80 Mbps"
+          description: "Kecepatan download ether1-WAN saat ini menyentuh {{ $values.B.Value | printf \"%.2f\" }} Mbps (melebihi ambang batas aman 80.00 Mbps)."
         labels:
           severity: "warning"
           device: "MikroTik-Router"

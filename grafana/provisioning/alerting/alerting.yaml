@@ -10,6 +10,25 @@ contactPoints:
         settings:
           bottoken: "${TELEGRAM_BOT_TOKEN}"
           chatid: "1510478721"
+          message: |
+            {{ range .Alerts }}
+            {{ if eq .Status "firing" }}🚨 [PERINGATAN] LONJAKAN TRAFIK TINGGI 🚨{{ else }}✅ [PULIH] TRAFIK KEMBALI NORMAL ✅{{ end }}
+            ━━━━━━━━━━━━━━━━━━━━━
+            🏢 Perusahaan : PT Baja Perkasa Sentosa
+            📡 Perangkat  : Router MikroTik (RB750Gr3)
+            🌐 Interface  : ether1-WAN (ISP Utama)
+            ⚠️ Batas Aman : 80.00 Mbps
+            ━━━━━━━━━━━━━━━━━━━━━
+            📊 Detail Metrik:
+            {{ .Annotations.description }}
+
+            💡 Rekomendasi:
+            Cek penggunaan bandwidth user atau unduhan besar via Winbox.
+
+            🔗 Dashboard Monitoring:
+            http://localhost:3000/d/mikrotik-network-overview/mikrotik-router-monitoring
+            ━━━━━━━━━━━━━━━━━━━━━
+            {{ end }}
 
 policies:
   - orgId: 1
