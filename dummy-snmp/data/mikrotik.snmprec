@@ -1,15 +1,23 @@
-# 1. System Information (SNMPv2-MIB)
+# =============================================================================
+# Dummy SNMP Data - MikroTik RB750Gr3 (community: mikrotik)
+# PT Baja Perkasa Sentosa & Sentosa Harmony Steel
+#
+# Format: OID|TAG|VALUE   (WAJIB urut numerik naik berdasarkan OID)
+#
+# Nilai STATIS ditulis langsung di file ini.
+# Nilai DINAMIS memakai variation module "subprocess" yang membaca file dari
+# /usr/local/snmpsim/dynamic/<metric> -> ditulis berkala oleh container
+# snmp-generator (dummy-snmp/generator/generator.py).
+#
+# Tag: 2=Integer 4=OctetString 6=OID 65=Counter32 66=Gauge32 67=TimeTicks 70=Counter64
+# =============================================================================
 1.3.6.1.2.1.1.1.0|4|RouterOS RB750Gr3 (hEX) - PT Baja Perkasa Sentosa
 1.3.6.1.2.1.1.2.0|6|1.3.6.1.4.1.14988.1
-1.3.6.1.2.1.1.3.0|67|18452300
+1.3.6.1.2.1.1.3.0|67:numeric|rate=100,initial=18452300
 1.3.6.1.2.1.1.4.0|4|IT Support <it@bajaperkasa.com>
 1.3.6.1.2.1.1.5.0|4|Mikrotik-Kantor-BPS
 1.3.6.1.2.1.1.6.0|4|Server Room - Lantai 1
-
-# 2. Interface Count (IF-MIB)
 1.3.6.1.2.1.2.1.0|2|3
-
-# 3. Interfaces Description & Status
 1.3.6.1.2.1.2.2.1.1.1|2|1
 1.3.6.1.2.1.2.2.1.1.2|2|2
 1.3.6.1.2.1.2.2.1.1.3|2|3
@@ -19,35 +27,41 @@
 1.3.6.1.2.1.2.2.1.3.1|2|6
 1.3.6.1.2.1.2.2.1.3.2|2|6
 1.3.6.1.2.1.2.2.1.3.3|2|6
-1.3.6.1.2.1.2.2.1.5.1|65|1000000000
-1.3.6.1.2.1.2.2.1.5.2|65|1000000000
-1.3.6.1.2.1.2.2.1.5.3|65|300000000
-
-# Interface Operational Status (1=UP, 2=DOWN)
+1.3.6.1.2.1.2.2.1.5.1|66|1000000000
+1.3.6.1.2.1.2.2.1.5.2|66|1000000000
+1.3.6.1.2.1.2.2.1.5.3|66|300000000
 1.3.6.1.2.1.2.2.1.8.1|2|1
 1.3.6.1.2.1.2.2.1.8.2|2|1
 1.3.6.1.2.1.2.2.1.8.3|2|1
-
-# 4. Interface High Capacity 64-bit Counters (Bandwidth in/out)
+1.3.6.1.2.1.25.1.1.0|67:numeric|rate=100,initial=18452300
+1.3.6.1.2.1.25.2.3.1.1.1|2|1
+1.3.6.1.2.1.25.2.3.1.1.2|2|2
+1.3.6.1.2.1.25.2.3.1.2.1|6|1.3.6.1.2.1.25.2.1.2
+1.3.6.1.2.1.25.2.3.1.2.2|6|1.3.6.1.2.1.25.2.1.4
+1.3.6.1.2.1.25.2.3.1.3.1|4|main memory
+1.3.6.1.2.1.25.2.3.1.3.2|4|system disk
+1.3.6.1.2.1.25.2.3.1.4.1|2|1024
+1.3.6.1.2.1.25.2.3.1.4.2|2|1024
+1.3.6.1.2.1.25.2.3.1.5.1|2|262144
+1.3.6.1.2.1.25.2.3.1.5.2|2|16384
+1.3.6.1.2.1.25.2.3.1.6.1|2:subprocess|cat /usr/local/snmpsim/dynamic/hrStorageUsed.1
+1.3.6.1.2.1.25.2.3.1.6.2|2|4096
+1.3.6.1.2.1.25.3.3.1.2.1|2:subprocess|cat /usr/local/snmpsim/dynamic/hrProcessorLoad.1
+1.3.6.1.2.1.25.3.3.1.2.2|2:subprocess|cat /usr/local/snmpsim/dynamic/hrProcessorLoad.2
 1.3.6.1.2.1.31.1.1.1.1.1|4|ether1
 1.3.6.1.2.1.31.1.1.1.1.2|4|ether2
 1.3.6.1.2.1.31.1.1.1.1.3|4|wlan1
-1.3.6.1.2.1.31.1.1.1.6.1|70|28492048590
-1.3.6.1.2.1.31.1.1.1.6.2|70|19492048590
-1.3.6.1.2.1.31.1.1.1.6.3|70|5249204859
-1.3.6.1.2.1.31.1.1.1.10.1|70|25492048590
-1.3.6.1.2.1.31.1.1.1.10.2|70|27492048590
-1.3.6.1.2.1.31.1.1.1.10.3|70|4249204859
-
-# 5. Host Resources (CPU & Memory)
-1.3.6.1.2.1.25.3.3.1.2.1|2|18
-1.3.6.1.2.1.25.3.3.1.2.2|2|24
-1.3.6.1.2.1.25.2.3.1.5.1|2|262144
-1.3.6.1.2.1.25.2.3.1.6.1|2|98304
-
-# 6. MikroTik Hardware Health (Temperature, Voltage, CPU Temp)
-1.3.6.1.4.1.14988.1.1.3.8.0|2|240
-1.3.6.1.4.1.14988.1.1.3.10.0|2|42
-1.3.6.1.4.1.14988.1.1.3.11.0|2|47
+1.3.6.1.2.1.31.1.1.1.6.1|70:subprocess|cat /usr/local/snmpsim/dynamic/ifHCInOctets.1
+1.3.6.1.2.1.31.1.1.1.6.2|70:subprocess|cat /usr/local/snmpsim/dynamic/ifHCInOctets.2
+1.3.6.1.2.1.31.1.1.1.6.3|70:subprocess|cat /usr/local/snmpsim/dynamic/ifHCInOctets.3
+1.3.6.1.2.1.31.1.1.1.10.1|70:subprocess|cat /usr/local/snmpsim/dynamic/ifHCOutOctets.1
+1.3.6.1.2.1.31.1.1.1.10.2|70:subprocess|cat /usr/local/snmpsim/dynamic/ifHCOutOctets.2
+1.3.6.1.2.1.31.1.1.1.10.3|70:subprocess|cat /usr/local/snmpsim/dynamic/ifHCOutOctets.3
+1.3.6.1.4.1.14988.1.1.3.8.0|2:subprocess|cat /usr/local/snmpsim/dynamic/mtxrHlVoltage
+1.3.6.1.4.1.14988.1.1.3.10.0|2:subprocess|cat /usr/local/snmpsim/dynamic/mtxrHlTemperature
+1.3.6.1.4.1.14988.1.1.3.11.0|2:subprocess|cat /usr/local/snmpsim/dynamic/mtxrHlProcessorTemperature
 1.3.6.1.4.1.14988.1.1.3.14.0|2|880
-
+1.3.6.1.4.1.14988.1.1.7.3.0|4|HE109XYZ999
+1.3.6.1.4.1.14988.1.1.7.4.0|4|7.14
+1.3.6.1.4.1.14988.1.1.7.7.0|4|7.14
+1.3.6.1.4.1.14988.1.1.7.8.0|4|RB750Gr3

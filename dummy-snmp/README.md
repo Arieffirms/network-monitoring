@@ -64,3 +64,18 @@ cd dummy-snmp
 docker compose down
 ```
 
+
+---
+
+## Update: Dynamic Data Generator (Data Real-Time)
+
+Nilai CPU, RAM, suhu, tegangan, dan counter trafik **tidak lagi statis**. Container `snmp-generator` ([generator/generator.py](./generator/generator.py)) menulis nilai baru tiap 5 detik ke volume `bps_snmp_dynamic`. `snmp-simulator` membaca nilai itu lewat variation module `subprocess` (`cat /usr/local/snmpsim/dynamic/<metric>`).
+
+```bash
+cd dummy-snmp
+docker compose up -d                 # generator start dulu (healthcheck), lalu simulator
+docker compose logs -f snmp-generator   # lihat nilai yang sedang disimulasikan
+docker exec snmp-generator touch /dynamic/FORCE_SPIKE   # paksa lonjakan ether1 (uji alert)
+```
+
+Parameter bisa diatur di `docker-compose.yml`: `TICK_SECONDS`, `SPIKE_PROBABILITY`, `SPIKE_MIN_SECONDS`, `SPIKE_MAX_SECONDS`.

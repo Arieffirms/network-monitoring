@@ -1,6 +1,53 @@
 name: bps-dummy-snmp
 
+# Alur data dummy:
+#   snmp-generator  --(tulis nilai tiap 5s ke volume snmp_dynamic)-->
+#   snmp-simulator  --(baca nilai via subprocess "cat", jawab SNMP)-->
+#   snmp-exporter -> prometheus (15s) -> grafana (live)
+
 services:
+  # Dynamic Data Generator: mengubah nilai dummy secara berkala
+  snmp-generator:
+    # Pakai image yang sama dengan simulator (sudah ada di host, Python 3.4)
+    # -> tidak perlu download image tambahan
+    image: tandrup/snmpsim:v0.4
+    container_name: snmp-generator
+    restart: unless-stopped
+    entrypoint: ["python", "-u", "/app/generator.py"]
+    command: []
+    # Root di dalam container hanya agar bisa menulis ke named volume baru
+    # (milik root). Semua capability di-drop & filesystem read-only.
+    user: "0:0"
+    cap_drop:
+      - ALL
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - DYNAMIC_DIR=/dynamic
+      - TICK_SECONDS=5
+      - SPIKE_PROBABILITY=0.015
+      - SPIKE_MIN_SECONDS=90
+      - SPIKE_MAX_SECONDS=240
+      - TZ=Asia/Jakarta
+    volumes:
+      - ./generator/generator.py:/app/generator.py:ro
+      - snmp_dynamic:/dynamic
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /dynamic/READY"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    mem_limit: 64m
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+    networks:
+      - bps-network-monitoring
+
+  # SNMP Simulator: menyediakan data OID virtual
   snmp-simulator:
     image: tandrup/snmpsim:v0.4
     container_name: snmp-simulator
@@ -11,8 +58,19 @@ services:
       # Port SNMP UDP di localhost
       - "127.0.0.1:161:161/udp"
     volumes:
-      # Data OID MIB MikroTik dummy
+      # Data OID MIB MikroTik dummy (statis + referensi file dinamis)
       - ./data:/usr/local/snmpsim/data:ro
+      # Nilai dinamis hasil snmp-generator (read-only)
+      - snmp_dynamic:/usr/local/snmpsim/dynamic:ro
+    depends_on:
+      snmp-generator:
+        condition: service_healthy
+    mem_limit: 128m
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
     networks:
       - bps-network-monitoring
 
@@ -21,3 +79,6 @@ networks:
     name: bps-network-monitoring
     external: true
 
+volumes:
+  snmp_dynamic:
+    name: bps_snmp_dynamic

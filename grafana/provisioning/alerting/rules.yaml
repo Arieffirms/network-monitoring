@@ -1,0 +1,69 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: "MikroTik Network Alerts"
+    folder: "MikroTik Alerts"
+    interval: "1m"
+    rules:
+      - uid: "mikrotik_high_traffic_ether1"
+        title: "Trafik Tinggi ether1-WAN (> 80 Mbps)"
+        condition: "C"
+        data:
+          - refId: "A"
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "prometheus"
+            model:
+              editorMode: "code"
+              expr: "(rate(ifHCInOctets{ifName=~\"ether1.*\"}[1m]) * 8) / 1000000"
+              intervalMs: 15000
+              maxDataPoints: 43200
+              refId: "A"
+          - refId: "B"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              expression: "A"
+              reducer: "last"
+              type: "reduce"
+              refId: "B"
+          - refId: "C"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 80
+                    type: "gt"
+                  operator:
+                    type: "and"
+                  reducer:
+                    type: "last"
+                  type: "query"
+              datasource:
+                name: "Expression"
+                type: "__expr__"
+                uid: "__expr__"
+              expression: "B"
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: "C"
+              type: "threshold"
+        noDataState: "OK"
+        execErrState: "Error"
+        for: "30s"
+        annotations:
+          summary: "Trafik ether1-WAN Melebihi 80 Mbps"
+          description: "Kecepatan download ether1-WAN melebihi batas 80 Mbps (saat ini: {{ $values.B.Value | printf \"%.2f\" }} Mbps). Mohon cek pemakaian bandwidth."
+        labels:
+          severity: "warning"
+          device: "MikroTik-Router"
+          router: "RB750Gr3"
+

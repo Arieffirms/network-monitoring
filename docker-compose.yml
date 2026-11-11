@@ -20,23 +20,17 @@ services:
     networks:
       - monitoring
 
-  node-exporter:
-    image: prom/node-exporter:v1.9.0
-    container_name: node-exporter
+  snmp-exporter:
+    image: prom/snmp-exporter:v0.26.0
+    container_name: snmp-exporter
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
     command:
-      - --path.procfs=/host/proc
-      - --path.sysfs=/host/sys
-      - --path.rootfs=/rootfs
-      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+      - --config.file=/etc/snmp_exporter/snmp.yml
+      - --log.level=debug
     volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    ports:
-      - "127.0.0.1:${NODE_EXPORTER_PORT:-9100}:9100"
+      - ./snmp/snmp.yml:/etc/snmp_exporter/snmp.yml:ro
     networks:
       - monitoring
 
@@ -52,6 +46,8 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    extra_hosts:
+      - "api.telegram.org:149.154.166.110"
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
