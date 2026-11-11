@@ -1,3 +1,5 @@
+name: bps-monitoring
+
 services:
   prometheus:
     image: prom/prometheus:v3.2.1
@@ -61,8 +63,11 @@ services:
 
 networks:
   monitoring:
+    name: bps-network-monitoring
     driver: bridge
 
 volumes:
   prometheus_data:
+    name: bps_prometheus_data
   grafana_data:
+    name: bps_grafana_data
