@@ -12,10 +12,10 @@ Stack monitoring difokuskan penuh untuk **Analisa & Monitoring Router MikroTik (
 
 | Service | Container Name | Image Version | Port Binding | Status |
 |---|---|---|---|---|
-| **Prometheus** | `prometheus` | `prom/prometheus:v3.2.1` | `127.0.0.1:9090` | ✅ Up & Scraping (15s) |
+| **Prometheus** | `prometheus` | `prom/prometheus:v3.2.1` | `0.0.0.0:9090` | ✅ Up & Scraping (15s) |
 | **SNMP Exporter** | `snmp-exporter` | `prom/snmp-exporter:v0.26.0` | Internal (`9116`) | ✅ Up |
-| **Grafana OSS** | `grafana` | `grafana/grafana:11.5.2` | `127.0.0.1:3000` | ✅ Up & Healthy |
-| **SNMP Simulator** | `snmp-simulator` | `tandrup/snmpsim:v0.4` | `127.0.0.1:161/udp` | ✅ Up & Serving Live Counters |
+| **Grafana OSS** | `grafana` | `grafana/grafana:11.5.2` | `0.0.0.0:3000` | ✅ Up & Healthy |
+| **SNMP Simulator** | `snmp-simulator` | `tandrup/snmpsim:v0.4` | `0.0.0.0:161/udp` | ✅ Up & Serving Live Counters |
 
 ---
 
@@ -86,7 +86,8 @@ Pola data dari generator:
 - [x] **Docker Compose Syntax:** Valid (`docker compose config --quiet`).
 - [x] **SNMP OID Order:** Terurut rapi secara numerik (`snmpsim` tidak ada error *OID not increasing*).
 - [x] **Grafana JSON Syntax:** Semua file `.json` valid sintaks JSON tanpa error schema.
-- [x] **Kredensial Grafana:** Teruji dan aktif (`Admin` / `Admin123!`).
+- [x] **Kredensial Grafana:** Teruji dan aktif (`admin` / `Admin123!`).
+- [x] **Folder Dashboards Bersih:** Folder kosong `MikroTik Alerts` telah dihapus; aturan alert disatukan ke dalam folder `Infrastructure` bersama dashboard.
 - [x] **PromQL Queries:** 100% valid tanpa fungsi `sin()` yang menyebabkan error/tanda seru `!`.
 - [x] **Live Streaming Timeseries:** Mengalir secara *real-time* dengan `liveNow: true` dan interval refresh 5s.
 - [x] **Alert Triggering:** Status `Alerting` berhasil terpicu dari lonjakan data dummy ~95 Mbps.
