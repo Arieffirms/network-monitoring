@@ -6,6 +6,18 @@ auths:
         auth_protocol: MD5
         priv_protocol: DES
         version: 2
+    grafana_bps:
+        community: grafana-bps
+        security_level: noAuthNoPriv
+        auth_protocol: MD5
+        priv_protocol: DES
+        version: 2
+    prod_v2:
+        community: grafana-bps
+        security_level: noAuthNoPriv
+        auth_protocol: MD5
+        priv_protocol: DES
+        version: 2
 modules:
     mikrotik:
       walk:

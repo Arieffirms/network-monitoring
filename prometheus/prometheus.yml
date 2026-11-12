@@ -8,18 +8,34 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  # 2. Monitoring Router MikroTik (Dummy Simulator atau Router Asli) via SNMP
+  # 2. Monitoring Router MikroTik (Dual Path: Dev Simulator & Prod Fisik)
   - job_name: "snmp-mikrotik"
-    static_configs:
-      - targets:
-          - "snmp-simulator:161"
     metrics_path: /snmp
     params:
       module: [mikrotik]
+    static_configs:
+      # Jalur 1: Testing / Dev (Dummy Simulator)
+      - targets: ["snmp-simulator:161"]
+        labels:
+          environment: "dev"
+          device: "MikroTik-Dummy"
+          instance: "mikrotik-dev"
+          auth_module: "public_v2"
+
+      # Jalur 2: Production (Router Fisik Kantor PT BPS)
+      - targets: ["192.168.2.1:161"]
+        labels:
+          environment: "prod"
+          device: "MikroTik-RB5009"
+          instance: "mikrotik-prod"
+          auth_module: "grafana_bps"
+
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
-      - source_labels: [__param_target]
+      - source_labels: [auth_module]
+        target_label: __param_auth
+      - source_labels: [instance]
         target_label: instance
       - target_label: __address__
         replacement: "snmp-exporter:9116"

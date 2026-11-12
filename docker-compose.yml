@@ -7,14 +7,25 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        sed -e "s|__PROD_TARGET__|${MIKROTIK_PROD_HOST:-192.168.88.1}:${MIKROTIK_PROD_PORT:-161}|g" \
+            /etc/prometheus/prometheus.yml.tmpl > /tmp/prometheus.yml
+        exec /bin/prometheus "$$@"
+      - --
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
+      - --config.file=/tmp/prometheus.yml
       - --storage.tsdb.path=/prometheus
       - --storage.tsdb.retention.time=15d
       - --web.enable-lifecycle
+    environment:
+      - MIKROTIK_PROD_HOST=${MIKROTIK_PROD_HOST:-192.168.88.1}
+      - MIKROTIK_PROD_PORT=${MIKROTIK_PROD_PORT:-161}
     volumes:
       - prometheus_data:/prometheus
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/prometheus.yml.tmpl:/etc/prometheus/prometheus.yml.tmpl:ro
     ports:
       - "0.0.0.0:${PROMETHEUS_PORT:-9090}:9090"
     networks:
