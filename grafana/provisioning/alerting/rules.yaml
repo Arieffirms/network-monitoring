@@ -3,7 +3,7 @@ apiVersion: 1
 groups:
   - orgId: 1
     name: "MikroTik Network Alerts"
-    folder: "MikroTik Alerts"
+    folder: "Infrastructure"
     interval: "1m"
     rules:
       - uid: "mikrotik_high_traffic_ether1"
