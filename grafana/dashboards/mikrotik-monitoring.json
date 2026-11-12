@@ -8564,21 +8564,32 @@
       {
         "current": {
           "selected": true,
-          "text": "snmp-simulator:161",
-          "value": "snmp-simulator:161"
+          "text": "mikrotik-prod",
+          "value": "mikrotik-prod"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "query_result(ifInOctets{job=\"snmp-exporter\"})",
+        "definition": "label_values(ifHCInOctets, instance)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "instance",
-        "options": [],
+        "options": [
+          {
+            "selected": true,
+            "text": "mikrotik-prod",
+            "value": "mikrotik-prod"
+          },
+          {
+            "selected": false,
+            "text": "mikrotik-dev",
+            "value": "mikrotik-dev"
+          }
+        ],
         "query": {
-          "query": "label_values(ifHCInOctets,  instance)",
+          "query": "label_values(ifHCInOctets, instance)",
           "refId": "Prometheus-instance-Variable-Query"
         },
         "refresh": 1,
