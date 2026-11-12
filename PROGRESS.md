@@ -79,15 +79,35 @@ Pola data dari generator:
   - **Templating Variables:** Mengadopsi variabel bawaan repo aslinya (`$instance`, `$Job`, `$Interface`, `$queuesimple_name`, `$queuetree_name`) yang tersinkronisasi dengan exporter SNMP.
   - **Dataset Simulasi:** Didukung penuh oleh dataset 280 OID master di simulator sehingga seluruh metrik (CPU, RAM, Uptime, Wi-Fi, CAPsMAN, Simple & Tree Queue, Neighbors, POE) terbaca.
 
+### E. Arsitektur Dual-Path (Jalur Dev/Dummy vs Prod/Fisik)
+Stack kini mendukung 2 jalur monitoring secara bersamaan maupun bergantian tanpa saling mengganggu:
+1. **Jalur Testing / Dev (`mikrotik-dev`):**
+   - Mengambil data dari `snmp-simulator:161` (data dummy fluktuatif & simulasi alert).
+   - Dijalankan lewat `dummy-snmp/docker-compose.yml`.
+2. **Jalur Production (`mikrotik-prod`):**
+   - Mengambil data dari router fisik MikroTik kantor secara langsung via SNMP v2c.
+   - Konfigurasi dikendalikan penuh lewat file `.env`:
+     - `MIKROTIK_PROD_HOST` (IP router kantor, default: `192.168.88.1`)
+     - `MIKROTIK_PROD_PORT` (Port SNMP UDP, default: `161`)
+     - `MIKROTIK_COMMUNITY` (Community string, default: `public`)
+3. **Peralihan Instan di Grafana:**
+   - Dropdown `$instance` di Grafana menyediakan opsi `mikrotik-dev` dan `mikrotik-prod`.
+   - Admin/engineer cukup memilih target dari dropdown untuk beralih antara data simulator dan data router asli.
+4. **Template Alert Telegram Dinamis:**
+   - Pesan alert otomatis menyertakan label instance target (`mikrotik-dev` atau `mikrotik-prod`), membedakan asal peringatan dengan jelas.
+
 ---
 
 ## 3. Checklist Validasi & Quality Gates
 
 - [x] **Docker Compose Syntax:** Valid (`docker compose config --quiet`).
+- [x] **Prometheus Configuration Syntax:** Valid (`promtool check config`).
 - [x] **SNMP OID Order:** Terurut rapi secara numerik (`snmpsim` tidak ada error *OID not increasing*).
 - [x] **Grafana JSON Syntax:** Semua file `.json` valid sintaks JSON tanpa error schema.
 - [x] **Kredensial Grafana:** Teruji dan aktif (`admin` / `Admin123!`).
 - [x] **Folder Dashboards Bersih:** Folder kosong `MikroTik Alerts` telah dihapus; aturan alert disatukan ke dalam folder `Infrastructure` bersama dashboard.
+- [x] **Dual-Path Architecture:** Jalur `mikrotik-dev` dan `mikrotik-prod` terdaftar dan tervalidasi.
+- [x] **Koneksi Router Fisik MikroTik (Production):** Sukses terhubung ke router asli kantor (RouterOS RB5009UG+S+ di IP `192.168.2.1` via community `grafana-bps`). Metrik interfaces (`ether1-WAN1`, `ether3-LAN-Office`, `ether5-SAP`, `ether6-MES`, dll.) terbaca 100% aktif dan sehat (`health: up`).
 - [x] **PromQL Queries:** 100% valid tanpa fungsi `sin()` yang menyebabkan error/tanda seru `!`.
 - [x] **Live Streaming Timeseries:** Mengalir secara *real-time* dengan `liveNow: true` dan interval refresh 5s.
 - [x] **Alert Triggering:** Status `Alerting` berhasil terpicu dari lonjakan data dummy ~95 Mbps.
