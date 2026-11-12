@@ -8,33 +8,21 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  # 2. Monitoring Router MikroTik (Dual Path: Dev Simulator & Prod Fisik)
+  # 2. Monitoring Router MikroTik (Production PT Baja Perkasa Sentosa)
   - job_name: "snmp-mikrotik"
     metrics_path: /snmp
     params:
       module: [mikrotik]
+      auth: [grafana_bps]
     static_configs:
-      # Jalur 1: Testing / Dev (Dummy Simulator)
-      - targets: ["snmp-simulator:161"]
-        labels:
-          environment: "dev"
-          device: "MikroTik-Dummy"
-          instance: "mikrotik-dev"
-          auth_module: "public_v2"
-
-      # Jalur 2: Production (Router Fisik Kantor PT BPS)
       - targets: ["192.168.2.1:161"]
         labels:
           environment: "prod"
           device: "MikroTik-RB5009"
           instance: "mikrotik-prod"
-          auth_module: "grafana_bps"
-
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
-      - source_labels: [auth_module]
-        target_label: __param_auth
       - source_labels: [instance]
         target_label: instance
       - target_label: __address__

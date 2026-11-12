@@ -8581,11 +8581,6 @@
             "selected": true,
             "text": "mikrotik-prod",
             "value": "mikrotik-prod"
-          },
-          {
-            "selected": false,
-            "text": "mikrotik-dev",
-            "value": "mikrotik-dev"
           }
         ],
         "query": {
