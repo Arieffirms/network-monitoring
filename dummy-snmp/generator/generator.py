@@ -233,6 +233,14 @@ class Generator(object):
         write_value("mtxrWlRtabEntryCount", wifi_clients)
         write_value("mtxrWlApOverallTxCCQ", wifi_ccq)
 
+        # Dynamic POE (PoE Out Port 1 -> Access Point BPS)
+        poe_v = round(clamp(240 + random.gauss(0, 1.2), 236, 244))      # 23.6V - 24.4V
+        poe_i = round(clamp(180 + wifi_clients * 2.5 + random.gauss(0, 3), 160, 240)) # 160mA - 240mA
+        poe_p = round((poe_v / 10.0) * (poe_i / 1000.0) * 10)          # 0.1 Watt (e.g. 44 = 4.4 W)
+        write_value("mtxrPOEVoltage", poe_v)
+        write_value("mtxrPOECurrent", poe_i)
+        write_value("mtxrPOEPower", poe_p)
+
         if self.tick_count % LOG_EVERY_TICKS == 0:
             print("[generator] ether1 RX %.1f / TX %.1f Mbps | ether2 out %.1f | "
                   "wlan1 %.1f | CPU %d%% | RAM %d KB | %d C%s" % (
