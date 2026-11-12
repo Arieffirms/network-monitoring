@@ -55,8 +55,8 @@ services:
     security_opt:
       - no-new-privileges:true
     ports:
-      # Port SNMP UDP di localhost
-      - "127.0.0.1:161:161/udp"
+      # Port SNMP UDP di 0.0.0.0 agar bisa diakses dari jaringan
+      - "0.0.0.0:161:161/udp"
     volumes:
       # Data OID MIB MikroTik dummy (statis + referensi file dinamis)
       - ./data:/usr/local/snmpsim/data:ro
