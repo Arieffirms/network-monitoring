@@ -107,314 +107,16 @@
   "liveNow": true,
   "panels": [
     {
-      "collapsed": true,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 1655,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "Total SNMP time scrape took (walk and processing)",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [
-                {
-                  "options": {
-                    "result": {
-                      "text": ""
-                    },
-                    "to": 0
-                  },
-                  "type": "range"
-                }
-              ],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#299c46",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 1
-                  },
-                  {
-                    "color": "#EF843C",
-                    "value": 1.5
-                  },
-                  {
-                    "color": "red",
-                    "value": 2
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 4,
-            "x": 0,
-            "y": 1
-          },
-          "id": 1656,
-          "links": [],
-          "maxDataPoints": 100,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.0.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "snmp_scrape_duration_seconds{instance='$instance'}",
-              "instant": true,
-              "interval": "",
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "title": "Total SNMP time (walk and processing)",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "Time SNMP walk/bulkwalk took",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [
-                {
-                  "options": {
-                    "result": {
-                      "text": ""
-                    },
-                    "to": 0
-                  },
-                  "type": "range"
-                }
-              ],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#299c46",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 1
-                  },
-                  {
-                    "color": "#EF843C",
-                    "value": 1.5
-                  },
-                  {
-                    "color": "red",
-                    "value": 2
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 4,
-            "x": 4,
-            "y": 1
-          },
-          "id": 1657,
-          "links": [],
-          "maxDataPoints": 100,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.0.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "snmp_scrape_walk_duration_seconds{instance='$instance'}",
-              "instant": true,
-              "interval": "",
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "title": "Time SNMP walk/bulkwalk took",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [
-                {
-                  "options": {
-                    "result": {
-                      "text": ""
-                    },
-                    "to": 0
-                  },
-                  "type": "range"
-                }
-              ],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "text",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 4,
-            "x": 8,
-            "y": 1
-          },
-          "id": 1658,
-          "links": [],
-          "maxDataPoints": 100,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.0.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "snmp_scrape_pdus_returned{instance='$instance'}",
-              "instant": true,
-              "interval": "",
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "title": "scrape pdus returned",
-          "type": "stat"
-        }
-      ],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "SNMP",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
       "id": 1218,
       "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "System",
+      "title": "Router & System Information",
       "type": "row"
     },
     {
@@ -473,7 +175,7 @@
         "h": 2,
         "w": 4,
         "x": 0,
-        "y": 2
+        "y": 1
       },
       "id": 476,
       "links": [],
@@ -580,7 +282,7 @@
         "h": 2,
         "w": 2,
         "x": 4,
-        "y": 2
+        "y": 1
       },
       "id": 1220,
       "options": {
@@ -648,7 +350,7 @@
         "h": 2,
         "w": 2,
         "x": 6,
-        "y": 2
+        "y": 1
       },
       "id": 1614,
       "options": {
@@ -713,7 +415,7 @@
         "h": 2,
         "w": 4,
         "x": 8,
-        "y": 2
+        "y": 1
       },
       "id": 1264,
       "options": {
@@ -778,7 +480,7 @@
         "h": 2,
         "w": 4,
         "x": 12,
-        "y": 2
+        "y": 1
       },
       "id": 1311,
       "options": {
@@ -843,7 +545,7 @@
         "h": 2,
         "w": 8,
         "x": 16,
-        "y": 2
+        "y": 1
       },
       "id": 1241,
       "options": {
@@ -885,7 +587,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Active DHCP leases distributed by this MikroTik router",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -896,12 +598,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46",
+                "color": "blue",
                 "value": null
               }
             ]
           },
-          "unit": "dateTimeAsLocal"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -909,11 +611,9 @@
         "h": 2,
         "w": 4,
         "x": 0,
-        "y": 4
+        "y": 3
       },
       "id": 1325,
-      "links": [],
-      "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -923,28 +623,26 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^Time$/",
+          "fields": "",
           "values": false
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "time()-(hrSystemDate{instance='$instance'})",
+          "expr": "mtxrDHCPLeaseCount{instance=\"\"}",
           "instant": true,
-          "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "System date",
+      "title": "Active DHCP Leases",
       "type": "stat"
     },
     {
@@ -974,7 +672,7 @@
         "h": 2,
         "w": 2,
         "x": 4,
-        "y": 4
+        "y": 3
       },
       "id": 1222,
       "options": {
@@ -1040,7 +738,7 @@
         "h": 2,
         "w": 2,
         "x": 6,
-        "y": 4
+        "y": 3
       },
       "id": 1650,
       "options": {
@@ -1106,7 +804,7 @@
         "h": 2,
         "w": 4,
         "x": 8,
-        "y": 4
+        "y": 3
       },
       "id": 1248,
       "options": {
@@ -1171,7 +869,7 @@
         "h": 2,
         "w": 4,
         "x": 12,
-        "y": 4
+        "y": 3
       },
       "id": 1649,
       "options": {
@@ -1213,7 +911,78 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Processor temperature from onboard sensor",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 75
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 16,
+        "y": 3
+      },
+      "id": 1653,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "mtxrHlProcessorTemperature{instance=\"\"} / 10",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Temperature",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Prometheus scrape health for MikroTik gateway SNMP",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1222,9 +991,15 @@
           "mappings": [
             {
               "options": {
-                "": {
+                "0": {
+                  "color": "red",
                   "index": 0,
-                  "text": "N/A"
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "UP"
                 }
               },
               "type": "value"
@@ -1234,56 +1009,69 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46",
+                "color": "red",
                 "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
               }
             ]
           },
-          "unit": "string"
+          "unit": "text"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 2,
-        "w": 8,
-        "x": 16,
-        "y": 4
+        "w": 4,
+        "x": 20,
+        "y": 3
       },
-      "id": 1653,
-      "links": [],
-      "maxDataPoints": 100,
+      "id": 1654,
       "options": {
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "text": {},
-        "textMode": "name"
+        "textMode": "auto"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "mtxrNote{instance='$instance'}",
+          "expr": "up{job=\"snmp-mikrotik\", instance=\"\"}",
           "instant": true,
-          "interval": "",
-          "legendFormat": " {{mtxrNote}}",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Note",
+      "title": "Gateway SNMP Status",
       "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 1700,
+      "panels": [],
+      "title": "Hardware & Resource Utilization",
+      "type": "row"
     },
     {
       "datasource": {
@@ -1322,7 +1110,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 5,
+        "w": 4,
         "x": 0,
         "y": 6
       },
@@ -1405,8 +1193,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 5,
+        "w": 4,
+        "x": 4,
         "y": 6
       },
       "id": 482,
@@ -1490,8 +1278,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 10,
+        "w": 4,
+        "x": 8,
         "y": 6
       },
       "id": 480,
@@ -1586,8 +1374,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 9,
-        "x": 15,
+        "w": 12,
+        "x": 12,
         "y": 6
       },
       "id": 1262,
@@ -1612,10 +1400,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "hrProcessorLoad{instance='$instance'}",
-          "interval": "",
-          "legendFormat": "CPU {{hrDeviceIndex}}  load",
+          "expr": "avg(hrProcessorLoad{instance=\"\"})",
+          "legendFormat": "CPU Avg (%)",
           "refId": "A"
         },
         {
@@ -1623,13 +1409,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "mtxrHlTemperature{instance='$instance'}/10",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "legendFormat": "CPU temp",
+          "expr": "(hrStorageUsed{hrStorageIndex=\"65536\",instance=\"\"} * 100) / (hrStorageSize{hrStorageIndex=\"65536\",instance=\"\"})",
+          "legendFormat": "RAM Load (%)",
           "refId": "B"
         },
         {
@@ -1637,11 +1418,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "(hrStorageUsed{hrStorageIndex='65536',instance='$instance'} * 100 )/(hrStorageSize{hrStorageIndex='65536',instance='$instance'})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "RAM usage",
+          "expr": "(hrStorageUsed{hrStorageIndex=\"131072\",instance=\"\"} * 100) / (hrStorageSize{hrStorageIndex=\"131072\",instance=\"\"})",
+          "legendFormat": "Disk Load (%)",
           "refId": "C"
         },
         {
@@ -1649,28 +1427,26 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "(hrStorageUsed{hrStorageIndex='131072',instance='$instance'} * 100 )/(hrStorageSize{hrStorageIndex='131072',instance='$instance'})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "System disk",
+          "expr": "mtxrHlProcessorTemperature{instance=\"\"} / 10",
+          "legendFormat": "CPU Temp (\u00b0C)",
           "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "exemplar": true,
-          "expr": "mtxrHlVoltage{instance='$instance'}/10",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Voltage",
-          "refId": "E"
         }
       ],
-      "title": "System",
+      "title": "System Resources Trend",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 1285,
+      "panels": [],
+      "title": "Network Traffic & Interfaces",
+      "type": "row"
     },
     {
       "datasource": {
@@ -1726,10 +1502,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 13
       },
       "id": 1239,
       "options": {
@@ -1754,13 +1530,117 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "irate(ifHCInOctets{ifName=~'$Interface',instance='$instance'}[$__rate_interval])*8",
+          "expr": "irate(ifHCInOctets{ifName=~\"\",instance=\"\"}[]) * 8",
           "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
           "legendFormat": "In - {{ifName}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "-irate(ifHCOutOctets{ifName=~\"\",instance=\"\"}[]) * 8",
+          "format": "time_series",
+          "legendFormat": "Out - {{ifName}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Network Traffic Basic",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Packet errors and discards per interface",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "packets / sec",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1.5,
+            "pointSize": 5,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 1240,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "irate(ifInErrors{ifName=~\"\",instance=\"\"}[])",
+          "legendFormat": "In Errors - {{ifName}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "irate(ifOutErrors{ifName=~\"\",instance=\"\"}[])",
+          "legendFormat": "Out Errors - {{ifName}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "irate(ifInDiscards{ifName=~\"\",instance=\"\"}[])",
+          "legendFormat": "In Discards - {{ifName}}",
           "refId": "C"
         },
         {
@@ -1768,16 +1648,12 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "exemplar": true,
-          "expr": "-irate(ifHCOutOctets{ifName=~'$Interface',instance='$instance'}[$__rate_interval])*8",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Out - {{ifName}}",
-          "refId": "A"
+          "expr": "irate(ifOutDiscards{ifName=~\"\",instance=\"\"}[])",
+          "legendFormat": "Out Discards - {{ifName}}",
+          "refId": "D"
         }
       ],
-      "title": "Network Traffic Basic",
+      "title": "Interface Errors & Discards",
       "type": "timeseries"
     },
     {
@@ -2150,10 +2026,10 @@
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 29
       },
       "id": 1275,
       "options": {
@@ -2292,20 +2168,6 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "mtxrPOEInterfaceIndex{instance='$instance'}",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "I"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "exemplar": true,
           "expr": "ifAlias{instance='$instance'}",
           "format": "table",
           "hide": false,
@@ -2428,426 +2290,6 @@
         }
       ],
       "type": "table"
-    },
-    {
-      "collapsed": true,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 33
-      },
-      "id": 1338,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 50,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "smooth",
-                "lineWidth": 2,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "pps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 11,
-            "w": 8,
-            "x": 0,
-            "y": 9
-          },
-          "id": 1339,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "bottom"
-            },
-            "tooltip": {
-              "mode": "multi"
-            }
-          },
-          "pluginVersion": "8.2.1",
-          "repeat": "Interface",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifHCInMulticastPkts{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "In Multicast",
-              "refId": "K"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "-irate(ifHCOutMulticastPkts{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Out Multicast",
-              "refId": "L"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifHCInBroadcastPkts{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "In Broadcast",
-              "refId": "C"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "-irate(ifHCOutBroadcastPkts{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Out Broadcast",
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifHCInUcastPkts{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "In Unicast",
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "-irate(ifHCOutUcastPkts{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Out Unicast",
-              "refId": "D"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifInDiscards{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "In Discard",
-              "refId": "E"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifOutDiscards{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Out Discard",
-              "refId": "F"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifInErrors{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "In Errors",
-              "refId": "G"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifOutErrors{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Out Errors",
-              "refId": "H"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifInUnknownProtos{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "In Unknown Protos",
-              "refId": "I"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "-irate(ifOutQLen{ifName=~'$Interface',instance='$instance'}[$__rate_interval])",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "Out queue length",
-              "refId": "J"
-            }
-          ],
-          "title": "Interface \"$Interface\"",
-          "type": "timeseries"
-        }
-      ],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "*cast/Dascard/Errors/Unknown Protos/Queue length",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 32
-      },
-      "id": 1285,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 100,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "smooth",
-                "lineWidth": 2,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "bps"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "In"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#6afff3",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Out"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#bf71ff",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 8,
-            "x": 0,
-            "y": 10
-          },
-          "id": 1286,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "bottom"
-            },
-            "tooltip": {
-              "mode": "multi"
-            }
-          },
-          "pluginVersion": "8.2.1",
-          "repeat": "Interface",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "irate(ifHCInOctets{ifName=~'$Interface',instance='$instance'}[$__rate_interval])*8",
-              "format": "time_series",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "In",
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "exemplar": true,
-              "expr": "-irate(ifHCOutOctets{ifName=~'$Interface',instance='$instance'}[$__rate_interval])*8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "Out",
-              "refId": "B"
-            }
-          ],
-          "title": "Traffic \"$Interface\"",
-          "type": "timeseries"
-        }
-      ],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Interfaces Traffic",
-      "type": "row"
     }
   ],
   "refresh": "5s",
@@ -2950,7 +2392,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(ifHighSpeed{instance='$instance'},ifIndex)",
+        "definition": "label_values(ifHighSpeed{instance=\"\"}, ifIndex)",
         "hide": 2,
         "includeAll": false,
         "label": "",
@@ -2958,7 +2400,7 @@
         "name": "index",
         "options": [],
         "query": {
-          "query": "label_values(ifHighSpeed{instance='$instance'},ifIndex)",
+          "query": "label_values(ifHighSpeed{instance=\"\"}, ifIndex)",
           "refId": "Prometheus-index-Variable-Query"
         },
         "refresh": 1,
@@ -2971,51 +2413,34 @@
         "useTags": false
       },
       {
-        "allValue": "",
-        "current": {},
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            ""
+          ]
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "query_result(sort(ifIndex{ifName=~'^(ether).+',instance='$instance'}) or sort(ifIndex{ifName=~'^(sfp|wlan).+',instance='$instance'}) or sort(ifIndex{ifName=~'^bridge.+',instance='$instance'}) or  sort(ifIndex{ifName!~'^(ether|bridge).+',instance='$instance'}) )",
+        "definition": "label_values(ifHCInOctets{instance=\"\"}, ifName)",
         "hide": 0,
         "includeAll": true,
-        "multi": false,
+        "multi": true,
         "name": "Interface",
         "options": [],
         "query": {
-          "query": "query_result(sort(ifIndex{ifName=~'^(ether).+',instance='$instance'}) or sort(ifIndex{ifName=~'^(sfp|wlan).+',instance='$instance'}) or sort(ifIndex{ifName=~'^bridge.+',instance='$instance'}) or  sort(ifIndex{ifName!~'^(ether|bridge).+',instance='$instance'}) )",
+          "query": "label_values(ifHCInOctets{instance=\"\"}, ifName)",
           "refId": "Prometheus-Interface-Variable-Query"
         },
         "refresh": 1,
-        "regex": "/ifName=\"(.*?)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
-        },
-        "definition": "query_result(ifHCInOctets{ifName=\"$Interface\",instance=\"$instance\"})",
-        "hide": 2,
-        "includeAll": false,
-        "multi": false,
-        "name": "desc",
-        "options": [],
-        "query": {
-          "query": "query_result(ifHCInOctets{ifName=\"$Interface\",instance=\"$instance\"})",
-          "refId": "Prometheus-desc-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "/ifAlias=\"(.*)\",ifDescr/",
-        "skipUrlSync": false,
-        "sort": 4,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",

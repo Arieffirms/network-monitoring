@@ -2,7 +2,7 @@
 
 Status Terakhir: **Aktif & Terverifikasi (Production Mode / Router Fisik PT Baja Perkasa Sentosa)**  
 Diperbarui oleh: **Romi (Senior DevOps Engineer)**  
-Tanggal: **12 November 2026**
+Tanggal: **13 November 2026**
 
 ---
 
@@ -44,9 +44,22 @@ flowchart LR
 - **`sfp-sfpplus1`** (Uplink Fiber Optic 10G)
 - **`wg-bps`** (VPN WireGuard Antar-Site BPS)
 
-### C. Dashboard MikroTik Modern & Full Advanced
-1. **MikroTik Router Monitoring (Overview):** Banner hijau identitas RouterOS, gauge CPU & RAM, stat uptime, grafik tren CPU history, memory used vs free, status port table, traffic RX/TX gelombang, dan packet rate.
-2. **MikroTik Monitoring (Full Advanced 40 Panel):** 100% identik dengan standar referensi BPS mencakup metrik SNMP, Error counters, Neighbors, Simple Queue, Tree Queue, serta statistik paket jaringan.
+### C. Dashboard MikroTik Streamlined & Zero "No Data" (Full Advanced)
+Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dirancang presisi dengan 23 panel aktif berbasis data riil dari Gateway MikroTik RB5009UG+S+:
+1. **Router & System Information:** Uptime router, Device Status, Device Errors, System Identity (`MikroTik`), Serial Number, dan Model Router (`RB5009UG+S+ 7.22.2 stable`).
+2. **Gateway Specific Metrics:**
+   - **Active DHCP Leases:** Jumlah sewa IP aktif perangkat kantor (221 leases).
+   - **Board & Package Version:** Versi firmware dan paket RouterOS.
+   - **Board Name & Software ID:** Detail lisensi pabrikan.
+   - **CPU Temperature:** Sensor suhu CPU aktual onboard (~53°C).
+   - **Gateway SNMP Status:** Indikator visual kesehatan koneksi SNMP (UP/DOWN).
+3. **Hardware & Resource Utilization:**
+   - 3 Gauge indikator: CPU Load Avg (%), RAM Load (%), System Disk Load (%).
+   - Grafik timeseries: Tren beban sistem gabungan (CPU, RAM, Disk, Suhu CPU).
+4. **Network Traffic & Interfaces:**
+   - **Network Traffic Basic:** Grafik In/Out bandwidth (bps) dengan variabel `$Interface` otomatis `All` (`.*`) mencakup 11 interface fisik/virtual.
+   - **Interface Errors & Discards:** Grafik packet rate errors & drops (pps).
+   - **Interfaces Details Table:** Tabel status port, MAC address, link speed, MTU, RX/TX bytes total, link flaps, dan deskripsi/alias port tanpa metrik kosong.
 
 ### D. Auto-Provisioning Alerting Telegram
 - Rule lonjakan bandwidth `ether1` **> 80 Mbps** aktif di scheduler Grafana (`for: 30s`).
@@ -69,3 +82,5 @@ flowchart LR
 - [x] **Live Streaming Timeseries:** Mengalir secara *real-time* dengan `liveNow: true` dan interval refresh 5s.
 - [x] **Single Streamlined Dashboard:** Dashboard lama `MikroTik Router Monitoring` telah dihapus; kini hanya menggunakan 1 dashboard utama `MikroTik Monitoring (Full Advanced)` yang telah dirapikan (menghapus seluruh panel No Data seperti Wireless, CAPsMAN, W60G, Modem, Queue, dan POE).
 - [x] **SNMP Timeout Hardened:** Scrape timeout disetel ke 25s dan interval 30s untuk menjamin walk SNMP stabil tanpa *context deadline exceeded*.
+- [x] **Zero "No Data" Resolution:** Variabel `$Interface` diperbaiki dengan `includeAll: true`, `allValue: ".*"`, dan default `All` sehingga grafik traffic langsung merender 11 interface. Seluruh panel yang tidak didukung hardware RB5009 diganti dengan metrik gateway riil (Active DHCP Leases, CPU Temperature, dan Gateway SNMP Status).
+- [x] **Winbox SNMP Allowed Address Note:** Untuk mencegah SNMP timeout saat host laptop mendapatkan IP baru dari DHCP Wi-Fi (misal `192.168.2.222`), konfigurasi community di Winbox (`IP > SNMP > Communities > grafana-bps`) disarankan mengizinkan subnet `192.168.2.0/24` atau `0.0.0.0/0`.
