@@ -124,3 +124,4 @@ for r in data:
 | **mtxrBoardName** | `1.3.6.1.4.1.14988.1.1.7.8.0` | Tipe board (misal `RB5009UG+S+`) |
 | **hrProcessorLoad** | `1.3.6.1.2.1.25.3.3.1.2` | Beban persen tiap core prosesor |
 | **sysUpTime** | `1.3.6.1.2.1.1.3.0` | Lama waktu router menyala (*uptime*) |
+

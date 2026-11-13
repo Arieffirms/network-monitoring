@@ -10,6 +10,8 @@ scrape_configs:
 
   # 2. Monitoring Router MikroTik (Production PT Baja Perkasa Sentosa)
   - job_name: "snmp-mikrotik"
+    scrape_interval: 30s
+    scrape_timeout: 25s
     metrics_path: /snmp
     params:
       module: [mikrotik]
