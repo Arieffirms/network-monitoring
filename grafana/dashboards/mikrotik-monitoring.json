@@ -636,7 +636,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "mtxrDHCPLeaseCount{instance=\"\"}",
+          "expr": "mtxrDHCPLeaseCount{instance='$instance'}",
           "instant": true,
           "legendFormat": "",
           "refId": "A"
@@ -968,7 +968,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "mtxrHlProcessorTemperature{instance=\"\"} / 10",
+          "expr": "mtxrHlProcessorTemperature{instance='$instance'} / 10",
           "instant": true,
           "legendFormat": "",
           "refId": "A"
@@ -1051,7 +1051,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "up{job=\"snmp-mikrotik\", instance=\"\"}",
+          "expr": "up{job=\"snmp-mikrotik\", instance=\"$instance\"}",
           "instant": true,
           "legendFormat": "",
           "refId": "A"
@@ -1400,7 +1400,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "avg(hrProcessorLoad{instance=\"\"})",
+          "expr": "avg(hrProcessorLoad{instance='$instance'})",
           "legendFormat": "CPU Avg (%)",
           "refId": "A"
         },
@@ -1409,7 +1409,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "(hrStorageUsed{hrStorageIndex=\"65536\",instance=\"\"} * 100) / (hrStorageSize{hrStorageIndex=\"65536\",instance=\"\"})",
+          "expr": "(hrStorageUsed{hrStorageIndex=\"65536\",instance='$instance'} * 100) / (hrStorageSize{hrStorageIndex=\"65536\",instance='$instance'})",
           "legendFormat": "RAM Load (%)",
           "refId": "B"
         },
@@ -1418,7 +1418,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "(hrStorageUsed{hrStorageIndex=\"131072\",instance=\"\"} * 100) / (hrStorageSize{hrStorageIndex=\"131072\",instance=\"\"})",
+          "expr": "(hrStorageUsed{hrStorageIndex=\"131072\",instance='$instance'} * 100) / (hrStorageSize{hrStorageIndex=\"131072\",instance='$instance'})",
           "legendFormat": "Disk Load (%)",
           "refId": "C"
         },
@@ -1427,7 +1427,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "mtxrHlProcessorTemperature{instance=\"\"} / 10",
+          "expr": "mtxrHlProcessorTemperature{instance='$instance'} / 10",
           "legendFormat": "CPU Temp (\u00b0C)",
           "refId": "D"
         }
@@ -1530,7 +1530,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifHCInOctets{ifName=~\"\",instance=\"\"}[]) * 8",
+          "expr": "irate(ifHCInOctets{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval]) * 8",
           "format": "time_series",
           "legendFormat": "In - {{ifName}}",
           "refId": "A"
@@ -1540,7 +1540,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "-irate(ifHCOutOctets{ifName=~\"\",instance=\"\"}[]) * 8",
+          "expr": "-irate(ifHCOutOctets{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval]) * 8",
           "format": "time_series",
           "legendFormat": "Out - {{ifName}}",
           "refId": "B"
@@ -1621,7 +1621,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifInErrors{ifName=~\"\",instance=\"\"}[])",
+          "expr": "irate(ifInErrors{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
           "legendFormat": "In Errors - {{ifName}}",
           "refId": "A"
         },
@@ -1630,7 +1630,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifOutErrors{ifName=~\"\",instance=\"\"}[])",
+          "expr": "irate(ifOutErrors{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
           "legendFormat": "Out Errors - {{ifName}}",
           "refId": "B"
         },
@@ -1639,7 +1639,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifInDiscards{ifName=~\"\",instance=\"\"}[])",
+          "expr": "irate(ifInDiscards{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
           "legendFormat": "In Discards - {{ifName}}",
           "refId": "C"
         },
@@ -1648,7 +1648,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifOutDiscards{ifName=~\"\",instance=\"\"}[])",
+          "expr": "irate(ifOutDiscards{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
           "legendFormat": "Out Discards - {{ifName}}",
           "refId": "D"
         }
@@ -2392,7 +2392,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(ifHighSpeed{instance=\"\"}, ifIndex)",
+        "definition": "label_values(ifHighSpeed{instance=\"$instance\"}, ifIndex)",
         "hide": 2,
         "includeAll": false,
         "label": "",
@@ -2400,7 +2400,7 @@
         "name": "index",
         "options": [],
         "query": {
-          "query": "label_values(ifHighSpeed{instance=\"\"}, ifIndex)",
+          "query": "label_values(ifHighSpeed{instance=\"$instance\"}, ifIndex)",
           "refId": "Prometheus-index-Variable-Query"
         },
         "refresh": 1,
@@ -2420,21 +2420,21 @@
             "All"
           ],
           "value": [
-            ""
+            "$__all"
           ]
         },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(ifHCInOctets{instance=\"\"}, ifName)",
+        "definition": "label_values(ifHCInOctets{instance=\"$instance\"}, ifName)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "Interface",
         "options": [],
         "query": {
-          "query": "label_values(ifHCInOctets{instance=\"\"}, ifName)",
+          "query": "label_values(ifHCInOctets{instance=\"$instance\"}, ifName)",
           "refId": "Prometheus-Interface-Variable-Query"
         },
         "refresh": 1,
