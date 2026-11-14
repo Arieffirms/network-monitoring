@@ -1332,11 +1332,24 @@
       "type": "timeseries"
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 1290,
+      "panels": [],
+      "title": "Network Security, Anomaly & Error Detection",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Packet errors and discards per interface",
+      "description": "Real-time early warning for packet floods (DoS/SYN), broadcast storms, dropped packets, physical CRC errors, and port flaps",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1346,7 +1359,7 @@
             "axisLabel": "packets / sec",
             "axisPlacement": "auto",
             "drawStyle": "line",
-            "fillOpacity": 15,
+            "fillOpacity": 20,
             "lineInterpolation": "smooth",
             "lineWidth": 1.5,
             "pointSize": 5,
@@ -1373,23 +1386,36 @@
           },
           "unit": "pps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Port Flap / Link Downs (flaps/5m)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 25
       },
       "id": 1240,
       "options": {
         "legend": {
           "calcs": [
-            "max",
-            "lastNotNull"
+            "lastNotNull",
+            "max"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "bottom"
         },
         "tooltip": {
           "mode": "multi",
@@ -1403,8 +1429,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifInErrors{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
-          "legendFormat": "In Errors - {{ifName}}",
+          "expr": "sum(rate(ifInUcastPkts{instance='$instance'}[$__rate_interval]))",
+          "legendFormat": "Total Ingress Packet Rate (pps) [DoS / Flood Detection]",
           "refId": "A"
         },
         {
@@ -1412,8 +1438,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifOutErrors{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
-          "legendFormat": "Out Errors - {{ifName}}",
+          "expr": "sum(rate(ifInBroadcastPkts{instance='$instance'}[$__rate_interval]))",
+          "legendFormat": "Broadcast Storm Flooding (pps) [Loop Detection]",
           "refId": "B"
         },
         {
@@ -1421,8 +1447,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifInDiscards{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
-          "legendFormat": "In Discards - {{ifName}}",
+          "expr": "sum(rate(ifInDiscards{instance='$instance'}[$__rate_interval]))",
+          "legendFormat": "Packets Dropped / Discarded (pps) [Firewall & Overload]",
           "refId": "C"
         },
         {
@@ -1430,12 +1456,30 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "irate(ifOutDiscards{ifName=~\"$Interface\",instance=\"$instance\"}[$__rate_interval])",
-          "legendFormat": "Out Discards - {{ifName}}",
+          "expr": "sum(rate(ifInErrors{instance='$instance'}[$__rate_interval]))",
+          "legendFormat": "Physical Link Errors / CRC (pps) [Cable / Port Damage]",
           "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(rate(ifInUnknownProtos{instance='$instance'}[$__rate_interval]))",
+          "legendFormat": "Unknown Protocol Anomalies (pps) [Malformed Packets]",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(increase(mtxrInterfaceStatsLinkDowns{instance='$instance'}[5m]))",
+          "legendFormat": "Port Flap / Link Downs (flaps/5m) [Loose Connection]",
+          "refId": "F"
         }
       ],
-      "title": "Interface Errors & Discards",
+      "title": "Network Anomaly, Security Threats & Error Trends (Early Warning)",
       "type": "timeseries"
     },
     {
@@ -1811,7 +1855,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 33
       },
       "id": 1275,
       "options": {

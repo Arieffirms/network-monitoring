@@ -57,9 +57,18 @@ Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dir
    - Panel grafik penuh 1 baris (`w=24`, `h=8`): **`System Resources Trend (4 Cores, RAM, Disk, Temp)`**.
    - Menghapus panel gauge mini yang sempit dan redundant; seluruh visualisasi difokuskan ke 1 grafik timeseries lebar mencakup 4 core CPU individual (`Core 1` s/d `Core 4`), rata-rata total CPU, RAM Load (%), Disk Load (%), dan Suhu CPU dengan ringkasan tabel angka Last & Max.
 4. **Network Traffic & Interfaces:**
-   - **Network Traffic Basic:** Grafik In/Out bandwidth (bps) dengan variabel `$Interface` otomatis `All` (`.*`) mencakup 11 interface fisik/virtual.
-   - **Interface Errors & Discards:** Grafik packet rate errors & drops (pps).
-   - **Interfaces Details Table:** Tabel status port, MAC address, link speed, MTU, RX/TX bytes total, link flaps, dan deskripsi/alias port tanpa metrik kosong.
+   - **`Network Traffic Basic` (Full Row `w=24`, `h=9`):** Grafik In/Out bandwidth (bps) dengan variabel `$Interface` otomatis `All` (`.*`) mencakup seluruh 11 interface.
+5. **Network Security, Anomaly & Error Detection (Early Warning Full Row `w=24`, `h=8`):**
+   - Panel **`Network Anomaly, Security Threats & Error Trends`**: Grafik lebar 1 baris penuh khusus mendeteksi indikasi serangan dan degradasi fisik jaringan:
+     1. *Total Ingress Packet Rate (pps):* Deteksi lonjakan paket serangan DoS/SYN Flood (> 25.000 pps).
+     2. *Broadcast Storm Flooding (pps):* Deteksi loop switch atau bad device broadcasting.
+     3. *Packets Dropped / Discarded (pps):* Deteksi firewall drop & router buffer overrun.
+     4. *Physical Link Errors / CRC (pps):* Deteksi kabel LAN rusak, port kendor, atau transmisi corrupt.
+     5. *Unknown Protocol Anomalies (pps):* Deteksi malformed packets / scanning tak lazim.
+     6. *Port Flap / Link Downs (flaps/5m):* Deteksi kabel/port yang putus-nyambung.
+   - Tabel legenda di bawah grafik menampilkan nilai terkini (*Last*) dan puncak anomali (*Max*).
+6. **Interfaces Details Table (`w=24`, `h=10`):**
+   - Tabel ringkasan status port, MAC, speed, MTU, total RX/TX sum, dan komentar interface.
 
 ### D. Auto-Provisioning Alerting Telegram
 - Rule lonjakan bandwidth `ether1` **> 80 Mbps** aktif di scheduler Grafana (`for: 30s`).
