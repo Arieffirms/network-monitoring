@@ -54,8 +54,9 @@ Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dir
    - **CPU Temperature:** Sensor suhu CPU aktual onboard (~53°C).
    - **Gateway SNMP Status:** Indikator visual kesehatan koneksi SNMP (UP/DOWN).
 3. **Hardware & Resource Utilization:**
-   - 3 Gauge indikator: CPU Load Avg (%), RAM Load (%), System Disk Load (%).
-   - Grafik timeseries: Tren beban sistem gabungan (CPU, RAM, Disk, Suhu CPU).
+   - Gauge indikator CPU Load: Menampilkan rata-rata total beban prosesor serta rincian pemakaian per-core (**Core 1, Core 2, Core 3, Core 4**).
+   - Gauge RAM Load (%) dan System Disk Load (%).
+   - Grafik timeseries `System Resources Trend`: Menganalisis kurva 4 individual CPU Cores (`CPU Core 1 (%)` s/d `CPU Core 4 (%)`), rata-rata total CPU, RAM, Disk, dan Suhu CPU dengan ringkasan tabel Last & Max.
 4. **Network Traffic & Interfaces:**
    - **Network Traffic Basic:** Grafik In/Out bandwidth (bps) dengan variabel `$Interface` otomatis `All` (`.*`) mencakup 11 interface fisik/virtual.
    - **Interface Errors & Discards:** Grafik packet rate errors & drops (pps).

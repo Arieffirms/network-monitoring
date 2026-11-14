@@ -1138,12 +1138,22 @@
           "exemplar": true,
           "expr": "avg(hrProcessorLoad{instance='$instance'})",
           "instant": true,
-          "interval": "",
-          "legendFormat": "",
+          "legendFormat": "Avg Total",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "exemplar": true,
+          "expr": "hrProcessorLoad{instance='$instance'}",
+          "instant": true,
+          "legendFormat": "Core {{hrDeviceIndex}}",
+          "refId": "B"
         }
       ],
-      "title": "CPU Load",
+      "title": "CPU Load (Total & 4 Cores)",
       "type": "gauge"
     },
     {
@@ -1383,8 +1393,11 @@
       "maxDataPoints": 100,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
           "placement": "bottom"
         },
         "tooltip": {
@@ -1400,9 +1413,18 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "avg(hrProcessorLoad{instance='$instance'})",
-          "legendFormat": "CPU Avg (%)",
+          "expr": "hrProcessorLoad{instance='$instance'}",
+          "legendFormat": "CPU Core {{hrDeviceIndex}} (%)",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "avg(hrProcessorLoad{instance='$instance'})",
+          "legendFormat": "CPU Avg Total (%)",
+          "refId": "B"
         },
         {
           "datasource": {
@@ -1411,7 +1433,7 @@
           },
           "expr": "(hrStorageUsed{hrStorageIndex=\"65536\",instance='$instance'} * 100) / (hrStorageSize{hrStorageIndex=\"65536\",instance='$instance'})",
           "legendFormat": "RAM Load (%)",
-          "refId": "B"
+          "refId": "C"
         },
         {
           "datasource": {
@@ -1420,7 +1442,7 @@
           },
           "expr": "(hrStorageUsed{hrStorageIndex=\"131072\",instance='$instance'} * 100) / (hrStorageSize{hrStorageIndex=\"131072\",instance='$instance'})",
           "legendFormat": "Disk Load (%)",
-          "refId": "C"
+          "refId": "D"
         },
         {
           "datasource": {
@@ -1429,10 +1451,10 @@
           },
           "expr": "mtxrHlProcessorTemperature{instance='$instance'} / 10",
           "legendFormat": "CPU Temp (\u00b0C)",
-          "refId": "D"
+          "refId": "E"
         }
       ],
-      "title": "System Resources Trend",
+      "title": "System Resources Trend (4 Cores, RAM, Disk, Temp)",
       "type": "timeseries"
     },
     {
