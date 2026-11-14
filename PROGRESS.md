@@ -89,7 +89,7 @@ Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dir
   3. *RAM Load Kritis:* > 85%
   4. *Indikasi Serangan Flooding (DoS/SYN Flood):* Laju paket masuk > 25.000 pps
 - [x] **Dynamic Telegram Notification Template:** Notifikasi Telegram diperbarui di `alerting.yaml` dengan format dinamis menampilkan nama insiden, kategori (Traffic / Resource / Security), tingkat keparahan (Severity), deskripsi metrik, dan tombol akses cepat dashboard.
-- [x] **Security Attack Logging & Simulation Guide:** Menyediakan panduan firewall filter MikroTik untuk logging serangan (Port Scan `psd`, Brute-Force SSH/Winbox, TCP SYN Flood) beserta perintah uji simulasi dari terminal Linux.
+- [x] **Security Attack Logging & Simulation Guide:** Menyediakan panduan firewall filter MikroTik untuk logging serangan (Port Scan `psd`, Brute-Force SSH/Winbox, TCP SYN Flood) beserta script interaktif [`simulasi_monitoring.py`](file:///home/rapiets/Documents/intern/PT-BAJA-PERKASA-SENTOSA-AND-SENTOSA-HARMONY-STELL/simulasi_monitoring.py) untuk uji lonjakan trafik, port scan attack, dan live terminal monitor.
 
 
 
