@@ -78,32 +78,7 @@
   "gnetId": 14420,
   "graphTooltip": 1,
   "id": null,
-  "links": [
-    {
-      "asDropdown": false,
-      "icon": "external link",
-      "includeVars": false,
-      "keepTime": false,
-      "tags": [],
-      "targetBlank": true,
-      "title": "Github",
-      "tooltip": "Open project on Github",
-      "type": "link",
-      "url": "https://github.com/IgorKha/Grafana-Mikrotik"
-    },
-    {
-      "asDropdown": false,
-      "icon": "dashboard",
-      "includeVars": false,
-      "keepTime": false,
-      "tags": [],
-      "targetBlank": true,
-      "title": "dashboard",
-      "tooltip": "Open dashboard",
-      "type": "link",
-      "url": "https://grafana.com/grafana/dashboards/14420"
-    }
-  ],
+  "links": [],
   "liveNow": true,
   "panels": [
     {
