@@ -6,6 +6,7 @@ groups:
     folder: "Infrastructure"
     interval: "1m"
     rules:
+      # 1. Alert Lonjakan Bandwidth WAN
       - uid: "mikrotik_high_traffic_ether1"
         title: "Trafik Tinggi ether1-WAN (> 80 Mbps)"
         condition: "C"
@@ -17,7 +18,7 @@ groups:
             datasourceUid: "prometheus"
             model:
               editorMode: "code"
-              expr: "(rate(ifHCInOctets{ifName=~\"ether1.*\"}[1m]) * 8) / 1000000"
+              expr: "(rate(ifHCInOctets{ifName=~\"ether1.*\",instance=\"mikrotik-prod\"}[1m]) * 8) / 1000000"
               intervalMs: 15000
               maxDataPoints: 43200
               refId: "A"
@@ -61,9 +62,194 @@ groups:
         for: "30s"
         annotations:
           summary: "Trafik ether1-WAN Melebihi Batas 80 Mbps"
-          description: "Kecepatan download ether1-WAN saat ini menyentuh {{ $values.B.Value | printf \"%.2f\" }} Mbps (melebihi ambang batas aman 80.00 Mbps)."
+          description: "Kecepatan download ether1-WAN saat ini menyentuh {{ $values.B.Value | printf \"%.2f\" }} Mbps (ambang batas: 80.00 Mbps)."
         labels:
           severity: "warning"
-          device: "MikroTik-Router"
-          router: "RB750Gr3"
+          alert_category: "traffic"
+          device: "MikroTik-RB5009"
 
+      # 2. Alert Beban CPU Kritis (> 80%)
+      - uid: "mikrotik_high_cpu_load"
+        title: "CPU Load Kritis (> 80%)"
+        condition: "C"
+        data:
+          - refId: "A"
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "prometheus"
+            model:
+              editorMode: "code"
+              expr: "avg(hrProcessorLoad{instance=\"mikrotik-prod\"})"
+              intervalMs: 15000
+              maxDataPoints: 43200
+              refId: "A"
+          - refId: "B"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              expression: "A"
+              reducer: "last"
+              type: "reduce"
+              refId: "B"
+          - refId: "C"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 80
+                    type: "gt"
+                  operator:
+                    type: "and"
+                  reducer:
+                    type: "last"
+                  type: "query"
+              datasource:
+                name: "Expression"
+                type: "__expr__"
+                uid: "__expr__"
+              expression: "B"
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: "C"
+              type: "threshold"
+        noDataState: "OK"
+        execErrState: "Error"
+        for: "1m"
+        annotations:
+          summary: "CPU Load Router MikroTik Tinggi"
+          description: "Rata-rata penggunaan CPU saat ini mencapai {{ $values.B.Value | printf \"%.1f\" }}% (ambang batas: 80%)."
+        labels:
+          severity: "critical"
+          alert_category: "resource"
+          device: "MikroTik-RB5009"
+
+      # 3. Alert Beban RAM Tinggi (> 85%)
+      - uid: "mikrotik_high_ram_load"
+        title: "RAM Load Kritis (> 85%)"
+        condition: "C"
+        data:
+          - refId: "A"
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "prometheus"
+            model:
+              editorMode: "code"
+              expr: "(hrStorageUsed{hrStorageIndex=\"65536\",instance=\"mikrotik-prod\"} * 100) / (hrStorageSize{hrStorageIndex=\"65536\",instance=\"mikrotik-prod\"})"
+              intervalMs: 15000
+              maxDataPoints: 43200
+              refId: "A"
+          - refId: "B"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              expression: "A"
+              reducer: "last"
+              type: "reduce"
+              refId: "B"
+          - refId: "C"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 85
+                    type: "gt"
+                  operator:
+                    type: "and"
+                  reducer:
+                    type: "last"
+                  type: "query"
+              datasource:
+                name: "Expression"
+                type: "__expr__"
+                uid: "__expr__"
+              expression: "B"
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: "C"
+              type: "threshold"
+        noDataState: "OK"
+        execErrState: "Error"
+        for: "1m"
+        annotations:
+          summary: "Penggunaan RAM Router MikroTik Kritis"
+          description: "Penggunaan memori router saat ini mencapai {{ $values.B.Value | printf \"%.1f\" }}% (ambang batas: 85%)."
+        labels:
+          severity: "warning"
+          alert_category: "resource"
+          device: "MikroTik-RB5009"
+
+      # 4. Alert Indikasi Serangan Jaringan / Packet Flooding
+      - uid: "mikrotik_packet_flood_attack"
+        title: "Indikasi Serangan Packet Flooding (> 25.000 pps)"
+        condition: "C"
+        data:
+          - refId: "A"
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "prometheus"
+            model:
+              editorMode: "code"
+              expr: "sum(rate(ifInUcastPkts{instance=\"mikrotik-prod\"}[1m]))"
+              intervalMs: 15000
+              maxDataPoints: 43200
+              refId: "A"
+          - refId: "B"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              expression: "A"
+              reducer: "last"
+              type: "reduce"
+              refId: "B"
+          - refId: "C"
+            relativeTimeRange:
+              from: 0
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 25000
+                    type: "gt"
+                  operator:
+                    type: "and"
+                  reducer:
+                    type: "last"
+                  type: "query"
+              datasource:
+                name: "Expression"
+                type: "__expr__"
+                uid: "__expr__"
+              expression: "B"
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: "C"
+              type: "threshold"
+        noDataState: "OK"
+        execErrState: "Error"
+        for: "30s"
+        annotations:
+          summary: "Indikasi Serangan / Lonjakan Paket Ekstrem Terdeteksi"
+          description: "Laju paket masuk mencapai {{ $values.B.Value | printf \"%.0f\" }} paket/detik. Terindikasi adanya DoS/SYN Flood atau pemindaian jaringan agresif."
+        labels:
+          severity: "critical"
+          alert_category: "security"
+          device: "MikroTik-RB5009"

@@ -12,18 +12,18 @@ contactPoints:
           chatid: "1510478721"
           message: |
             {{ range .Alerts }}
-            {{ if eq .Status "firing" }}🚨 [PERINGATAN] LONJAKAN TRAFIK TINGGI 🚨{{ else }}✅ [PULIH] TRAFIK KEMBALI NORMAL ✅{{ end }}
+            {{ if eq .Status "firing" }}🚨 [PERINGATAN SISTEM] {{ .Labels.alertname }} 🚨{{ else }}✅ [PULIH] {{ .Labels.alertname }} KEMBALI NORMAL ✅{{ end }}
             ━━━━━━━━━━━━━━━━━━━━━
             🏢 Perusahaan : PT Baja Perkasa Sentosa
-            📡 Perangkat  : Router MikroTik ({{ if .Labels.instance }}{{ .Labels.instance }}{{ else }}RB750Gr3{{ end }})
-            🌐 Interface  : ether1-WAN (ISP Utama)
-            ⚠️ Batas Aman : 80.00 Mbps
+            📡 Perangkat  : Router MikroTik ({{ if .Labels.device }}{{ .Labels.device }}{{ else }}RB5009UG+S+{{ end }})
+            🏷️ Kategori   : {{ if .Labels.alert_category }}{{ .Labels.alert_category }}{{ else }}Infrastruktur{{ end }}
+            ⚠️ Severity   : {{ if .Labels.severity }}{{ .Labels.severity }}{{ else }}warning{{ end }}
             ━━━━━━━━━━━━━━━━━━━━━
-            📊 Detail Metrik:
+            📊 Detail Insiden:
             {{ .Annotations.description }}
 
             💡 Rekomendasi:
-            Cek penggunaan bandwidth user atau unduhan besar via Winbox.
+            Segera periksa Winbox RouterOS untuk verifikasi trafik, proses, atau log keamanan jaringan.
 
             🔗 Dashboard Monitoring:
             http://localhost:3000/d/mikrotik-snmp-advanced/mikrotik-monitoring-full-advanced

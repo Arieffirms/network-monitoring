@@ -83,4 +83,13 @@ Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dir
 - [x] **Single Streamlined Dashboard:** Dashboard lama `MikroTik Router Monitoring` telah dihapus; kini hanya menggunakan 1 dashboard utama `MikroTik Monitoring (Full Advanced)` yang telah dirapikan (menghapus seluruh panel No Data seperti Wireless, CAPsMAN, W60G, Modem, Queue, dan POE).
 - [x] **SNMP Timeout Hardened:** Scrape timeout disetel ke 25s dan interval 30s untuk menjamin walk SNMP stabil tanpa *context deadline exceeded*.
 - [x] **Zero "No Data" Resolution:** Variabel `$Interface` diperbaiki dengan `includeAll: true`, `allValue: ".*"`, dan default `All` sehingga grafik traffic langsung merender 11 interface. Seluruh panel yang tidak didukung hardware RB5009 diganti dengan metrik gateway riil (Active DHCP Leases, CPU Temperature, dan Gateway SNMP Status).
-- [x] **Winbox SNMP Allowed Address Note:** Untuk mencegah SNMP timeout saat host laptop mendapatkan IP baru dari DHCP Wi-Fi (misal `192.168.2.222`), konfigurasi community di Winbox (`IP > SNMP > Communities > grafana-bps`) disarankan mengizinkan subnet `192.168.2.0/24` atau `0.0.0.0/0`.
+- [x] **Comprehensive Alerting Suite:** Menambahkan 4 aturan alert otomatis di `grafana/provisioning/alerting/rules.yaml`:
+  1. *Trafik Tinggi ether1-WAN:* > 80 Mbps
+  2. *CPU Load Kritis:* > 80% (rata-rata 4 core)
+  3. *RAM Load Kritis:* > 85%
+  4. *Indikasi Serangan Flooding (DoS/SYN Flood):* Laju paket masuk > 25.000 pps
+- [x] **Dynamic Telegram Notification Template:** Notifikasi Telegram diperbarui di `alerting.yaml` dengan format dinamis menampilkan nama insiden, kategori (Traffic / Resource / Security), tingkat keparahan (Severity), deskripsi metrik, dan tombol akses cepat dashboard.
+- [x] **Security Attack Logging & Simulation Guide:** Menyediakan panduan firewall filter MikroTik untuk logging serangan (Port Scan `psd`, Brute-Force SSH/Winbox, TCP SYN Flood) beserta perintah uji simulasi dari terminal Linux.
+
+
+
