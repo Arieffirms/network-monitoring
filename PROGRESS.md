@@ -2,7 +2,7 @@
 
 Status Terakhir: **Aktif & Terverifikasi (Production Mode / Router Fisik PT Baja Perkasa Sentosa)**  
 Diperbarui oleh: **Romi (Senior DevOps Engineer)**  
-Tanggal: **13 November 2026**
+Tanggal: **16 November 2026**
 
 ---
 
@@ -44,31 +44,22 @@ flowchart LR
 - **`sfp-sfpplus1`** (Uplink Fiber Optic 10G)
 - **`wg-bps`** (VPN WireGuard Antar-Site BPS)
 
-### C. Dashboard MikroTik Streamlined & Zero "No Data" (Full Advanced)
-Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dirancang presisi dengan 23 panel aktif berbasis data riil dari Gateway MikroTik RB5009UG+S+:
-1. **Router & System Information:** Uptime router, Device Status, Device Errors, System Identity (`MikroTik`), Serial Number, dan Model Router (`RB5009UG+S+ 7.22.2 stable`).
-2. **Gateway Specific Metrics:**
-   - **Active DHCP Leases:** Jumlah sewa IP aktif perangkat kantor (221 leases).
-   - **Board & Package Version:** Versi firmware dan paket RouterOS.
-   - **Board Name & Software ID:** Detail lisensi pabrikan.
-   - **CPU Temperature:** Sensor suhu CPU aktual onboard (~53°C).
-   - **Gateway SNMP Status:** Indikator visual kesehatan koneksi SNMP (UP/DOWN).
-3. **Hardware & Resource Utilization:**
-   - Panel grafik penuh 1 baris (`w=24`, `h=8`): **`System Resources Trend (4 Cores, RAM, Disk, Temp)`**.
-   - Menghapus panel gauge mini yang sempit dan redundant; seluruh visualisasi difokuskan ke 1 grafik timeseries lebar mencakup 4 core CPU individual (`Core 1` s/d `Core 4`), rata-rata total CPU, RAM Load (%), Disk Load (%), dan Suhu CPU dengan ringkasan tabel angka Last & Max.
-4. **Network Traffic & Interfaces:**
-   - **`Network Traffic Basic` (Full Row `w=24`, `h=9`):** Grafik In/Out bandwidth (bps) dengan variabel `$Interface` otomatis `All` (`.*`) mencakup seluruh 11 interface.
-5. **Network Security, Anomaly & Error Detection (Early Warning Full Row `w=24`, `h=8`):**
-   - Panel **`Network Anomaly, Security Threats & Error Trends`**: Grafik lebar 1 baris penuh khusus mendeteksi indikasi serangan dan degradasi fisik jaringan:
-     1. *Total Ingress Packet Rate (pps):* Deteksi lonjakan paket serangan DoS/SYN Flood (> 25.000 pps).
-     2. *Broadcast Storm Flooding (pps):* Deteksi loop switch atau bad device broadcasting.
-     3. *Packets Dropped / Discarded (pps):* Deteksi firewall drop & router buffer overrun.
-     4. *Physical Link Errors / CRC (pps):* Deteksi kabel LAN rusak, port kendor, atau transmisi corrupt.
-     5. *Unknown Protocol Anomalies (pps):* Deteksi malformed packets / scanning tak lazim.
-     6. *Port Flap / Link Downs (flaps/5m):* Deteksi kabel/port yang putus-nyambung.
-   - Tabel legenda di bawah grafik menampilkan nilai terkini (*Last*) dan puncak anomali (*Max*).
-6. **Interfaces Details Table (`w=24`, `h=10`):**
-   - Tabel ringkasan status port, MAC, speed, MTU, total RX/TX sum, dan komentar interface.
+### C. Dashboard MikroTik Streamlined & Zero "No Data" (13 Panel Bersih)
+Dashboard tunggal di folder `Infrastructure` (`uid: mikrotik-snmp-advanced`) dirancang presisi dengan 13 panel esensial bebas dari kartu-kartu stat yang redundant:
+1. **5 Kartu KPI Header:**
+   - *Router Model & OS:* `RouterOS RB5009UG+S+ 7.22.2 (stable)`
+   - *Uptime:* Durasi operasional router aktif
+   - *Gateway SNMP Status:* Indikator visual UP/DOWN
+   - *CPU Temperature:* Suhu aktual prosesor onboard (~56°C)
+   - *Active DHCP Leases:* Jumlah perangkat kantor yang terhubung aktif (214–221 leases)
+2. **Hardware & Resource Utilization (Full Row `w=24`, `h=8`):**
+   - *System Resources Trend:* Kurva 4 CPU Cores (`Core 1` s/d `Core 4`), CPU Avg Total, RAM Load (%), Disk Load (%), dan Suhu CPU dengan ringkasan tabel Last & Max.
+3. **Network Traffic & Interfaces (Full Row `w=24`, `h=9`):**
+   - *Network Traffic Basic:* Grafik Ingress/Egress bandwidth real-time untuk 11 interface fisik dan virtual.
+4. **Network Security, Anomaly & Error Detection (Early Warning Full Row `w=24`, `h=8`):**
+   - *Network Anomaly, Security Threats & Error Trends:* Peringatan dini lonjakan paket masuk (DoS/SYN Flood), broadcast storm, dropped packets, physical link CRC errors, unknown protocols, dan port flap downs.
+5. **Interfaces Summary Table (`w=24`, `h=10`):**
+   - Rekapitulasi status port up/down, MAC address, port speed, MTU, RX/TX bytes total, link flaps, dan alias/komentar interface.
 
 ### D. Auto-Provisioning Alerting Telegram
 - Rule lonjakan bandwidth `ether1` **> 80 Mbps** aktif di scheduler Grafana (`for: 30s`).
