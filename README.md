@@ -26,13 +26,20 @@ Sistem monitoring real-time untuk **Router Gateway MikroTik (RB5009UG+S+)** meng
 
 ## 2. Cara Menjalankan Sistem
 
-### A. Menjalankan Monitoring (Background)
+### A. Persiapan File Environment (.env)
+Bagi pengguna baru atau setelah *clone* repositori, salin file template `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+*(Sesuaikan `HOST_LAN_IP` jika IP kabel LAN Anda berbeda, dan isi token Telegram jika ingin notifikasi bot aktif).*
+
+### B. Menjalankan Monitoring (Background)
 Pastikan service Docker aktif, lalu jalankan:
 ```bash
 docker compose up -d
 ```
 
-### B. Mengecek Status Container
+### C. Mengecek Status Container
 ```bash
 docker compose ps
 ```
@@ -41,7 +48,7 @@ Pastikan 3 container berstatus **Up**:
 * `prometheus` (Port 9090)
 * `snmp-exporter` (Internal 9116)
 
-### C. Menghentikan Monitoring
+### D. Menghentikan Monitoring
 ```bash
 docker compose down
 ```
