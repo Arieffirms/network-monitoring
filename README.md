@@ -48,7 +48,43 @@ docker compose down
 
 ---
 
-## 3. Fitur Utama Dashboard Grafana
+## 3. Panduan Penggunaan Sehari-hari (Step-by-Step)
+
+### Langkah 1: Sambungkan Kabel LAN
+* Pastikan kabel LAN laptop/server tercolok ke jaringan kantor (mendapatkan IP **`192.168.2.175`**).
+* *(Opsional)* Jika menggunakan Wi-Fi, pastikan opsi **Addresses** di Winbox sudah diubah ke `192.168.2.0/24`.
+
+### Langkah 2: Nyalakan Stack Container
+Buka terminal dan jalankan:
+```bash
+sudo systemctl start docker && docker compose up -d
+```
+
+### Langkah 3: Buka & Login ke Grafana
+1. Buka browser (Chrome/Firefox/Edge) dan akses:
+   👉 **[http://localhost:3000](http://localhost:3000)** *(atau `http://192.168.2.175:3000` dari PC lain)*.
+2. Masukkan kredensial:
+   * **Username:** `admin`
+   * **Password:** `Admin123!`
+3. Buka menu **Dashboards** $\rightarrow$ buka folder **Infrastructure** $\rightarrow$ klik **MikroTik Monitoring (Full Advanced)**.
+
+### Langkah 4: Cara Membaca & Menganalisis Dashboard
+* **1. Memeriksa Status Kesehatan Gateway (Header Atas):**
+  * Pastikan kotak **Gateway SNMP Status** berwarna **HIJAU (UP)**.
+  * Periksa **CPU Temperature** (normal di rentang 50–60 °C).
+  * Periksa **Active DHCP Leases** untuk melihat total perangkat yang sedang terhubung.
+* **2. Memantau Beban Hardware (System Resources Trend):**
+  * Perhatikan kurva pemakaian 4 Core CPU (`Core 1` s/d `Core 4`) dan RAM. Jika salah satu core naik $> 80\%$, cek proses router via Winbox.
+* **3. Memantau Bandwidth Jaringan (Network Traffic Basic):**
+  * Gunakan dropdown **Interface** di kiri atas untuk memilih port tertentu (misal: `ether1-WAN1` untuk internet utama, `ether3-LAN-Office`, atau `ether5-SAP`).
+  * Ganti rentang waktu di pojok kanan atas (*Last 30m*, *Last 1h*, *Last 6h*) untuk melihat tren grafik unduhan/unggahan.
+* **4. Deteksi Dini Kerusakan & Serangan (Network Anomaly & Errors):**
+  * Perhatikan garis **Physical Link Errors / CRC**: Nilai normal adalah **0**. Jika naik $> 0$, segera cek fisik kabel LAN atau switch kantor karena ada indikasi kabel terjepit/rusak.
+  * Perhatikan garis **Total Ingress Packet Rate**: Jika melonjak drastis ke puluhan ribu paket/detik, ada indikasi serangan flood/DoS.
+
+---
+
+## 4. Fitur Utama Dashboard Grafana
 
 Dashboard **`MikroTik Monitoring (Full Advanced)`** terdiri dari:
 1. **5 KPI Utama:** Model RouterOS, Uptime, Status SNMP (UP/DOWN), Suhu CPU (56°C), dan Active DHCP Leases (214+ perangkat).
@@ -59,7 +95,7 @@ Dashboard **`MikroTik Monitoring (Full Advanced)`** terdiri dari:
 
 ---
 
-## 4. Script Uji Coba & Simulasi
+## 5. Script Uji Coba & Simulasi
 
 Untuk menguji lonjakan trafik atau log serangan firewall secara aman:
 ```bash
@@ -70,3 +106,4 @@ Pilihan menu:
 * `2` : Simulasi Serangan Port Scan (Cek log di Winbox)
 * `3` : Panduan Beban CPU 100%
 * `4` : Live Monitor Metrik di Terminal
+
