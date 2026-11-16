@@ -1,6 +1,6 @@
-# Monitoring MikroTik Router – PT Baja Perkasa Sentosa
+# Monitoring MikroTik Router
 
-Sistem monitoring real-time untuk **Router Gateway MikroTik (RB5009UG+S+)** kantor PT Baja Perkasa Sentosa menggunakan **Prometheus**, **SNMP Exporter**, dan **Grafana OSS** berbasis Docker Compose.
+Sistem monitoring real-time untuk **Router Gateway MikroTik (RB5009UG+S+)** menggunakan **Prometheus**, **SNMP Exporter**, dan **Grafana OSS** berbasis Docker Compose.
 
 ---
 
