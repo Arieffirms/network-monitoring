@@ -9,7 +9,7 @@ contactPoints:
         disableResolveMessage: false
         settings:
           bottoken: "${TELEGRAM_BOT_TOKEN}"
-          chatid: "1510478721"
+          chatid: "${TELEGRAM_CHAT_ID}"
           message: |
             {{ range .Alerts }}
             {{ if eq .Status "firing" }}🚨 [PERINGATAN SISTEM] {{ .Labels.alertname }} 🚨{{ else }}✅ [PULIH] {{ .Labels.alertname }} KEMBALI NORMAL ✅{{ end }}

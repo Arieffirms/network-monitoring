@@ -14,6 +14,7 @@ Sistem monitoring real-time untuk **Router Gateway MikroTik (RB5009UG+S+)** kant
 | **SNMP Community** | `grafana-bps` (SNMP v2c) |
 | **Web UI Grafana** | [http://localhost:3000](http://localhost:3000) atau `http://192.168.2.175:3000` |
 | **Login Grafana** | Username: `admin` \| Password: `Admin123!` |
+| **Telegram Alerting** | **Opsional** (bisa dikosongkan di `.env` jika hanya ingin visual monitoring) |
 
 > [!IMPORTANT]
 > **Catatan Pengaturan IP MikroTik (`192.168.2.175`):**
@@ -28,7 +29,6 @@ Sistem monitoring real-time untuk **Router Gateway MikroTik (RB5009UG+S+)** kant
 ### A. Menjalankan Monitoring (Background)
 Pastikan service Docker aktif, lalu jalankan:
 ```bash
-sudo systemctl start docker
 docker compose up -d
 ```
 
